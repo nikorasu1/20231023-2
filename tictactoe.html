@@ -1,0 +1,171 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Velha</title>
+
+    <style>
+        table
+        {
+            border-collapse: collapse;
+        }
+
+        td
+        {
+            width: 75px;
+            height: 75px;
+            text-align: center;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+        }
+
+        #celula11
+        {
+            border: 3px solid;        
+        }
+
+        #celula01
+        {
+            border-left: 3px solid;
+            border-right: 3px solid;     
+        }
+
+        #celula10
+        {
+            border-top: 3px solid;
+            border-bottom: 3px solid;  
+        }
+
+        #celula12
+        {
+            border-top: 3px solid;
+            border-bottom: 3px solid;  
+        }
+
+        #celula21
+
+        {
+
+            border-right: 3px solid;
+            border-left: 3px solid;
+        }
+    </style>
+
+    <script lang="JavaScript">
+        var l, c, i, verifica;
+        var jogadorDaVez = "X";
+        var celulasPreenchidas = 0;
+        var jogo = [
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""]
+        ];
+
+        function jogando(linha, coluna) 
+        {
+            if (jogo[linha][coluna] =="")
+             {
+                jogo[linha][coluna] = jogadorDaVez;
+                celulasPreenchidas++;
+
+                if (jogadorDaVez == "X") 
+                {
+                    jogadorDaVez = "O";
+                } 
+
+                else 
+                {
+                    jogadorDaVez = "X";
+                }
+
+                atualizaTabuleiro();
+                verifica=verificaVitoria();
+
+                if (verifica == "X")
+                {
+                    alert("Jogador X venceu!");
+                } 
+                else if (verifica == "O") 
+                {
+                    alert("Jogador O venceu!");
+                }
+
+                else if(celulasPreenchidas == 9 && verifica == "") 
+                {
+                    alert("Empate!");
+                }   
+            }
+        }
+
+        function atualizaTabuleiro() {
+            for (l = 0; l < 3; l++) 
+            {
+                for (c = 0; c < 3; c++) 
+                {
+                    var celulaId = "celula" + l + c;
+                    var celula = document.getElementById(celulaId);
+                    celula.innerHTML = jogo[l][c];
+                }
+            }
+        }
+
+        function verificaVitoria() 
+        {
+            // Verificar linhas
+            for (var i = 0; i < 3; i++) 
+            {
+                if (jogo[i][0] !== "" && jogo[i][0] === jogo[i][1] && jogo[i][1] === jogo[i][2]) 
+                {
+                    return jogo[i][0];
+                }
+            }
+
+            // Verificar colunas
+            for (var j = 0; j < 3; j++) 
+            {
+                if (jogo[0][j] !== "" && jogo[0][j] === jogo[1][j] && jogo[1][j] === jogo[2][j]) 
+                {
+                    return jogo[0][j]; 
+                }
+            }
+
+            // Verificar diagonais
+            if (jogo[0][0] !== "" && jogo[0][0] === jogo[1][1] && jogo[1][1] === jogo[2][2]) 
+            {
+                return jogo[0][0]; 
+            }
+
+            if (jogo[0][2] !== "" && jogo[0][2] === jogo[1][1] && jogo[1][1] === jogo[2][0]) 
+            {
+                return jogo[0][2];
+            }
+
+            return "";
+        }
+
+    </script>
+</head>
+<body>
+    <center>
+        <table>
+            <tr>
+                <td id="celula00" class="celula" onclick="jogando(0, 0)"></td>
+                <td id="celula01" class="celula" onclick="jogando(0, 1)"></td>
+                <td id="celula02" class="celula" onclick="jogando(0, 2)"></td>
+            </tr>
+
+            <tr>
+                <td id="celula10" class="celula" onclick="jogando(1, 0)"></td>
+                <td id="celula11" class="celula" onclick="jogando(1, 1)"></td>
+                <td id="celula12" class="celula" onclick="jogando(1, 2)"></td>
+            </tr>
+
+            <tr>
+                <td id="celula20" class="celula" onclick="jogando(2, 0)"></td>
+                <td id="celula21" class="celula" onclick="jogando(2, 1)"></td>
+                <td id="celula22" class="celula" onclick="jogando(2, 2)"></td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
